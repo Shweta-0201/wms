@@ -10,8 +10,6 @@ A robust RESTful API for Warehouse Management System built with Ruby on Rails 8,
 - **Auto-generated Order Numbers**: Unique order identification system
 - **Data Validation**: Comprehensive input validation and error handling
 - **PostgreSQL Database**: Production-ready database system
-- **Background Jobs**: Built-in job processing with SolidQueue
-- **Caching System**: Performance optimization with SolidCache
 - **API Versioning**: Future-proof API design with versioning
 
 ## 🛠️ Technology Stack
@@ -19,8 +17,6 @@ A robust RESTful API for Warehouse Management System built with Ruby on Rails 8,
 - **Backend**: Ruby on Rails 8.0 (API-only)
 - **Database**: PostgreSQL 12+
 - **Language**: Ruby 3.2.2
-- **Job Processing**: SolidQueue
-- **Caching**: SolidCache
 - **Testing**: Rails Test Suite
 
 ## 📋 Prerequisites
@@ -212,14 +208,6 @@ rails generate migration AddColumnToTable column:type
 rails generate model ModelName field:type
 ```
 
-### Adding New Features
-
-1. Create migrations for database changes
-2. Update models with validations and relationships
-3. Create/update controllers with new endpoints
-4. Add routes in `config/routes.rb`
-5. Write tests for new functionality
-6. Update API documentation
 
 ## 🌐 Environment Configuration
 
@@ -238,12 +226,6 @@ export WMS_API_DATABASE_PASSWORD=your_production_password
 export RAILS_ENV=production
 ```
 
-## 📊 Sample Data
-
-The system includes pre-loaded sample data:
-- **4 Inventory Items**: Laptop, Mouse, Keyboard, Monitor
-- **2 Sample Orders**: With multiple line items
-- **Proper Relationships**: Demonstrating order-inventory connections
 
 Access sample data by visiting the API endpoints after running `rails db:seed`.
 
@@ -276,72 +258,8 @@ Access sample data by visiting the API endpoints after running `rails db:seed`.
 }
 ```
 
-## 🚀 Deployment
 
-### Using Docker
-```bash
-# Build image
-docker build -t wms-api .
-
-# Run container
-docker run -p 3000:3000 wms-api
 ```
-
-### Using Kamal (Included)
-```bash
-# Setup deployment
-kamal setup
-
-# Deploy
-kamal deploy
-```
-
-## 🤝 Contributing
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Development Guidelines
-
-- Follow Rails conventions and best practices
-- Write tests for new features
-- Update documentation for API changes
-- Ensure all tests pass before submitting PR
-- Use meaningful commit messages
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-#### Server won't start
-```bash
-# Check if port is in use
-lsof -i :3000
-pkill -f "rails server"
-```
-
-#### Database connection issues
-```bash
-# Check PostgreSQL status
-sudo service postgresql status
-sudo service postgresql start
-
-# Reset database
-rails db:drop db:create db:migrate db:seed
-```
-
-#### Permission issues
-```bash
-# Don't run as root
-# Use regular user account for development
-```
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 📞 Support
 
@@ -350,18 +268,6 @@ For support and questions:
 - Review [API_EXAMPLES.md](API_EXAMPLES.md) for complete API documentation
 - Read [ARCHITECTURE.md](ARCHITECTURE.md) for technical decisions and design patterns
 
-## 🎯 Future Enhancements
-
-- [ ] Authentication and authorization system
-- [ ] Advanced inventory tracking (stock movements)
-- [ ] Order fulfillment workflow
-- [ ] Real-time notifications
-- [ ] Advanced search and filtering
-- [ ] Batch operations
-- [ ] API rate limiting
-- [ ] Comprehensive logging
-- [ ] Performance monitoring
-- [ ] Mobile app support
 
 ---
 
