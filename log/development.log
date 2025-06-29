@@ -1,0 +1,307 @@
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY) /*application='WmsApi'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-06-29 13:50:32.532937', '2025-06-29 13:50:32.532942') RETURNING "key" /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+Migrating to CreateInventories (20250629134755)
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+Migrating to CreateInventories (20250629134755)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "inventories" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "sku" varchar, "name" varchar, "description" text, "quantity" integer, "price" decimal, "location" varchar, "supplier" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='WmsApi'*/[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE INDEX "index_inventories_on_sku" ON "inventories" ("sku") /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250629134755') RETURNING "version" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (2.7ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+Migrating to CreateOrders (20250629134815)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "orders" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "order_number" varchar, "customer_name" varchar, "customer_email" varchar, "status" varchar, "total_amount" decimal, "order_date" datetime(6), "shipped_date" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL) /*application='WmsApi'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_orders_on_order_number" ON "orders" ("order_number") /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250629134815') RETURNING "version" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+Migrating to CreateOrderItems (20250629134822)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE TABLE "order_items" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "order_id" integer NOT NULL, "inventory_id" integer NOT NULL, "quantity" integer, "unit_price" decimal, "total_price" decimal, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_e3cb28f071"
+FOREIGN KEY ("order_id")
+  REFERENCES "orders" ("id")
+, CONSTRAINT "fk_rails_79ba21ef41"
+FOREIGN KEY ("inventory_id")
+  REFERENCES "inventories" ("id")
+) /*application='WmsApi'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_order_id" ON "order_items" ("order_id") /*application='WmsApi'*/[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_inventory_id" ON "order_items" ("inventory_id") /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ('20250629134822') RETURNING "version" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.2ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'LAPTOP001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mInventory Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "inventories" WHERE "inventories"."sku" = 'LAPTOP001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Create (0.4ms)[0m  [1m[32mINSERT INTO "inventories" ("sku", "name", "description", "quantity", "price", "location", "supplier", "created_at", "updated_at") VALUES ('LAPTOP001', 'Dell Laptop', 'High-performance business laptop', 50, 999.99, 'A1-B2', 'Dell Inc', '2025-06-29 13:53:00.322164', '2025-06-29 13:53:00.322164') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (4.8ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.6ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'MOUSE001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mInventory Exists? (1.3ms)[0m  [1m[34mSELECT 1 AS one FROM "inventories" WHERE "inventories"."sku" = 'MOUSE001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Create (0.2ms)[0m  [1m[32mINSERT INTO "inventories" ("sku", "name", "description", "quantity", "price", "location", "supplier", "created_at", "updated_at") VALUES ('MOUSE001', 'Wireless Mouse', 'Ergonomic wireless mouse', 200, 29.99, 'A2-C1', 'Logitech', '2025-06-29 13:53:00.338315', '2025-06-29 13:53:00.338315') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.2ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'KEYBOARD001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mInventory Exists? (2.2ms)[0m  [1m[34mSELECT 1 AS one FROM "inventories" WHERE "inventories"."sku" = 'KEYBOARD001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Create (0.2ms)[0m  [1m[32mINSERT INTO "inventories" ("sku", "name", "description", "quantity", "price", "location", "supplier", "created_at", "updated_at") VALUES ('KEYBOARD001', 'Mechanical Keyboard', 'RGB mechanical gaming keyboard', 75, 149.99, 'A2-C2', 'Corsair', '2025-06-29 13:53:00.350419', '2025-06-29 13:53:00.350419') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.3ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'MONITOR001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mInventory Exists? (2.7ms)[0m  [1m[34mSELECT 1 AS one FROM "inventories" WHERE "inventories"."sku" = 'MONITOR001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Create (0.3ms)[0m  [1m[32mINSERT INTO "inventories" ("sku", "name", "description", "quantity", "price", "location", "supplier", "created_at", "updated_at") VALUES ('MONITOR001', '4K Monitor', '27-inch 4K UHD monitor', 30, 399.99, 'B1-A1', 'Samsung', '2025-06-29 13:53:00.361866', '2025-06-29 13:53:00.361866') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.2ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'LAPTOP001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.1ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'MOUSE001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.1ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'KEYBOARD001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mOrder Exists? (2.4ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" WHERE "orders"."order_number" = 'WMS-20250629-04400733' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[31mROLLBACK TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.2ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'LAPTOP001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.2ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'MOUSE001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.1ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'KEYBOARD001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.2ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'MONITOR001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mCACHE Inventory Load (0.0ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'LAPTOP001' LIMIT 1[0m
+  [1m[36mCACHE Inventory Load (0.0ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'MOUSE001' LIMIT 1[0m
+  [1m[36mCACHE Inventory Load (0.0ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'KEYBOARD001' LIMIT 1[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mOrder Exists? (1.6ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" WHERE "orders"."order_number" = 'WMS-20250629-228B35A2' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mOrder Create (0.4ms)[0m  [1m[32mINSERT INTO "orders" ("order_number", "customer_name", "customer_email", "status", "total_amount", "order_date", "shipped_date", "created_at", "updated_at") VALUES ('WMS-20250629-228B35A2', 'John Doe', 'john.doe@company.com', 'pending', 1.0, '2025-06-29 13:53:31.558749', NULL, '2025-06-29 13:53:31.562956', '2025-06-29 13:53:31.562956') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (4.7ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Create (1.6ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "inventory_id", "quantity", "unit_price", "total_price", "created_at", "updated_at") VALUES (1, 1, 2, 999.99, 1999.98, '2025-06-29 13:53:31.627018', '2025-06-29 13:53:31.627018') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Create (3.7ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "inventory_id", "quantity", "unit_price", "total_price", "created_at", "updated_at") VALUES (1, 2, 5, 29.99, 149.95, '2025-06-29 13:53:31.632640', '2025-06-29 13:53:31.632640') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Create (1.6ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "inventory_id", "quantity", "unit_price", "total_price", "created_at", "updated_at") VALUES (1, 3, 1, 149.99, 149.99, '2025-06-29 13:53:31.643275', '2025-06-29 13:53:31.643275') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mOrder Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" WHERE "orders"."order_number" = 'WMS-20250629-228B35A2' AND "orders"."id" != 1 LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mOrder Update (0.1ms)[0m  [1m[33mUPDATE "orders" SET "total_amount" = 2299.92, "updated_at" = '2025-06-29 13:53:31.703694' WHERE "orders"."id" = 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mOrder Exists? (1.3ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" WHERE "orders"."order_number" = 'WMS-20250629-7B30B998' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mOrder Create (0.2ms)[0m  [1m[32mINSERT INTO "orders" ("order_number", "customer_name", "customer_email", "status", "total_amount", "order_date", "shipped_date", "created_at", "updated_at") VALUES ('WMS-20250629-7B30B998', 'Jane Smith', 'jane.smith@tech.com', 'processing', 1.0, '2025-06-29 13:53:31.707017', NULL, '2025-06-29 13:53:31.710456', '2025-06-29 13:53:31.710456') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Create (3.4ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "inventory_id", "quantity", "unit_price", "total_price", "created_at", "updated_at") VALUES (2, 1, 1, 999.99, 999.99, '2025-06-29 13:53:31.714532', '2025-06-29 13:53:31.714532') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN immediate TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mOrder Exists? (1.4ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" WHERE "orders"."order_number" = 'WMS-20250629-7B30B998' AND "orders"."id" != 2 LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mOrder Update (0.1ms)[0m  [1m[33mUPDATE "orders" SET "total_amount" = 999.99, "updated_at" = '2025-06-29 13:53:31.725963' WHERE "orders"."id" = 2 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT TRANSACTION /*application='WmsApi'*/[0m
+  [1m[36mInventory Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "inventories" /*application='WmsApi'*/[0m
+  [1m[36mOrder Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "orders" /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Count (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "order_items" /*application='WmsApi'*/[0m
+Started GET "/api/v1/inventories" for 127.0.0.1 at 2025-06-29 19:23:44 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+Processing by Api::V1::InventoriesController#index as */*
+  [1m[36mInventory Load (1.1ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" /*action='index',application='WmsApi',controller='inventories'*/[0m
+  ↳ app/controllers/api/v1/inventories_controller.rb:6:in `index'
+Completed 200 OK in 49ms (Views: 11.5ms | ActiveRecord: 2.2ms (1 query, 0 cached) | GC: 3.1ms)
+
+
+Started GET "/api/v1/orders" for 127.0.0.1 at 2025-06-29 19:23:49 +0530
+Processing by Api::V1::OrdersController#index as */*
+  [1m[36mOrder Load (0.2ms)[0m  [1m[34mSELECT "orders".* FROM "orders" /*action='index',application='WmsApi',controller='orders'*/[0m
+  ↳ app/controllers/api/v1/orders_controller.rb:6:in `index'
+  [1m[36mOrderItem Load (0.3ms)[0m  [1m[34mSELECT "order_items".* FROM "order_items" WHERE "order_items"."order_id" IN (1, 2) /*action='index',application='WmsApi',controller='orders'*/[0m
+  ↳ app/controllers/api/v1/orders_controller.rb:6:in `index'
+  [1m[36mInventory Load (0.5ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."id" IN (1, 2, 3) /*action='index',application='WmsApi',controller='orders'*/[0m
+  ↳ app/controllers/api/v1/orders_controller.rb:6:in `index'
+Completed 200 OK in 70ms (Views: 62.5ms | ActiveRecord: 1.9ms (3 queries, 0 cached) | GC: 1.1ms)
+
+
+Started GET "/api/v1/orders" for 127.0.0.1 at 2025-06-29 19:23:55 +0530
+Processing by Api::V1::OrdersController#index as */*
+  [1m[36mOrder Load (0.2ms)[0m  [1m[34mSELECT "orders".* FROM "orders" /*action='index',application='WmsApi',controller='orders'*/[0m
+  ↳ app/controllers/api/v1/orders_controller.rb:6:in `index'
+  [1m[36mOrderItem Load (0.2ms)[0m  [1m[34mSELECT "order_items".* FROM "order_items" WHERE "order_items"."order_id" IN (1, 2) /*action='index',application='WmsApi',controller='orders'*/[0m
+  ↳ app/controllers/api/v1/orders_controller.rb:6:in `index'
+  [1m[36mInventory Load (0.2ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."id" IN (1, 2, 3) /*action='index',application='WmsApi',controller='orders'*/[0m
+  ↳ app/controllers/api/v1/orders_controller.rb:6:in `index'
+Completed 200 OK in 7ms (Views: 5.8ms | ActiveRecord: 0.6ms (3 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2025-06-29 19:24:34 +0530
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /root/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /root/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.3ms | GC: 0.0ms)
+Completed 200 OK in 55ms (Views: 17.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/icon.png" for ::1 at 2025-06-29 19:24:34 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/icon.png"):
+  
+Started GET "/" for ::1 at 2025-06-29 19:27:53 +0530
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /root/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /root/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 0.3ms | GC: 0.0ms)
+Completed 200 OK in 1ms (Views: 0.8ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+  [1m[35m (118.9ms)[0m  [1m[35mCREATE DATABASE "wms_api_development" ENCODING = 'unicode' /*application='WmsApi'*/[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mSET search_path TO public /*application='WmsApi'*/[0m
+  [1m[35m (201.7ms)[0m  [1m[35mCREATE DATABASE "wms_api_development" ENCODING = 'unicode' /*application='WmsApi'*/[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[35mSET search_path TO public /*application='WmsApi'*/[0m
+  [1m[35m (190.8ms)[0m  [1m[35mCREATE DATABASE "wms_api_test" ENCODING = 'unicode' /*application='WmsApi'*/[0m
+  [1m[35m (0.6ms)[0m  [1m[35mDROP TABLE IF EXISTS "inventories" CASCADE /*application='WmsApi'*/[0m
+  [1m[35m (12.0ms)[0m  [1m[35mCREATE TABLE "inventories" ("id" bigserial primary key, "sku" character varying, "name" character varying, "description" text, "quantity" integer, "price" decimal, "location" character varying, "supplier" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='WmsApi'*/[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE INDEX "index_inventories_on_sku" ON "inventories" ("sku") /*application='WmsApi'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "order_items" CASCADE /*application='WmsApi'*/[0m
+  [1m[35m (8.3ms)[0m  [1m[35mCREATE TABLE "order_items" ("id" bigserial primary key, "order_id" integer NOT NULL, "inventory_id" integer NOT NULL, "quantity" integer, "unit_price" decimal, "total_price" decimal, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='WmsApi'*/[0m
+  [1m[35m (8.1ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_inventory_id" ON "order_items" ("inventory_id") /*application='WmsApi'*/[0m
+  [1m[35m (5.3ms)[0m  [1m[35mCREATE INDEX "index_order_items_on_order_id" ON "order_items" ("order_id") /*application='WmsApi'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[35mDROP TABLE IF EXISTS "orders" CASCADE /*application='WmsApi'*/[0m
+  [1m[35m (8.4ms)[0m  [1m[35mCREATE TABLE "orders" ("id" bigserial primary key, "order_number" character varying, "customer_name" character varying, "customer_email" character varying, "status" character varying, "total_amount" decimal, "order_date" timestamp(6), "shipped_date" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='WmsApi'*/[0m
+  [1m[35m (3.3ms)[0m  [1m[35mCREATE INDEX "index_orders_on_order_number" ON "orders" ("order_number") /*application='WmsApi'*/[0m
+  [1m[35m (2.6ms)[0m  [1m[35mALTER TABLE "order_items" ADD CONSTRAINT "fk_rails_79ba21ef41"
+FOREIGN KEY ("inventory_id")
+  REFERENCES "inventories" ("id")
+ /*application='WmsApi'*/[0m
+  [1m[35m (2.7ms)[0m  [1m[35mALTER TABLE "order_items" ADD CONSTRAINT "fk_rails_e3cb28f071"
+FOREIGN KEY ("order_id")
+  REFERENCES "orders" ("id")
+ /*application='WmsApi'*/[0m
+  [1m[35m (8.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY) /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+  [1m[35m (1.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20250629134822) /*application='WmsApi'*/[0m
+  [1m[35m (1.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20250629134815),
+(20250629134755); /*application='WmsApi'*/[0m
+  [1m[35m (6.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL) /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.8ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('environment', 'development', '2025-06-29 14:07:20.623176', '2025-06-29 14:07:20.623182') RETURNING "key" /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'schema_sha1' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Create (2.6ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ('schema_sha1', 'e06f6f02e94c472f9e10512d2ac517318d06b9b4', '2025-06-29 14:07:20.630562', '2025-06-29 14:07:20.630567') RETURNING "key" /*application='WmsApi'*/[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(8284410209417297655) /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT * FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = 'environment' ORDER BY "ar_internal_metadata"."key" ASC LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(8284410209417297655) /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.7ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'LAPTOP001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mInventory Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "inventories" WHERE "inventories"."sku" = 'LAPTOP001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Create (2.0ms)[0m  [1m[32mINSERT INTO "inventories" ("sku", "name", "description", "quantity", "price", "location", "supplier", "created_at", "updated_at") VALUES ('LAPTOP001', 'Dell Laptop', 'High-performance business laptop', 50, 999.99, 'A1-B2', 'Dell Inc', '2025-06-29 14:07:44.879618', '2025-06-29 14:07:44.879618') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (3.0ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.6ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'MOUSE001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mInventory Exists? (1.9ms)[0m  [1m[34mSELECT 1 AS one FROM "inventories" WHERE "inventories"."sku" = 'MOUSE001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Create (0.6ms)[0m  [1m[32mINSERT INTO "inventories" ("sku", "name", "description", "quantity", "price", "location", "supplier", "created_at", "updated_at") VALUES ('MOUSE001', 'Wireless Mouse', 'Ergonomic wireless mouse', 200, 29.99, 'A2-C1', 'Logitech', '2025-06-29 14:07:44.895893', '2025-06-29 14:07:44.895893') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (1.3ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.5ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'KEYBOARD001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mInventory Exists? (2.4ms)[0m  [1m[34mSELECT 1 AS one FROM "inventories" WHERE "inventories"."sku" = 'KEYBOARD001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Create (0.4ms)[0m  [1m[32mINSERT INTO "inventories" ("sku", "name", "description", "quantity", "price", "location", "supplier", "created_at", "updated_at") VALUES ('KEYBOARD001', 'Mechanical Keyboard', 'RGB mechanical gaming keyboard', 75, 149.99, 'A2-C2', 'Corsair', '2025-06-29 14:07:44.908698', '2025-06-29 14:07:44.908698') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (3.2ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.5ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'MONITOR001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mInventory Exists? (3.2ms)[0m  [1m[34mSELECT 1 AS one FROM "inventories" WHERE "inventories"."sku" = 'MONITOR001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Create (0.6ms)[0m  [1m[32mINSERT INTO "inventories" ("sku", "name", "description", "quantity", "price", "location", "supplier", "created_at", "updated_at") VALUES ('MONITOR001', '4K Monitor', '27-inch 4K UHD monitor', 30, 399.99, 'B1-A1', 'Samsung', '2025-06-29 14:07:44.927861', '2025-06-29 14:07:44.927861') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (1.5ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.6ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'LAPTOP001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.6ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'MOUSE001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mInventory Load (0.5ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."sku" = 'KEYBOARD001' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mOrder Exists? (5.3ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" WHERE "orders"."order_number" = 'WMS-20250629-54D3BB79' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mOrder Create (1.1ms)[0m  [1m[32mINSERT INTO "orders" ("order_number", "customer_name", "customer_email", "status", "total_amount", "order_date", "shipped_date", "created_at", "updated_at") VALUES ('WMS-20250629-54D3BB79', 'John Doe', 'john.doe@company.com', 'pending', 1.0, '2025-06-29 14:07:44.970103', NULL, '2025-06-29 14:07:44.978886', '2025-06-29 14:07:44.978886') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (3.7ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Create (17.5ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "inventory_id", "quantity", "unit_price", "total_price", "created_at", "updated_at") VALUES (1, 1, 2, 999.99, 1999.98, '2025-06-29 14:07:45.052008', '2025-06-29 14:07:45.052008') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (2.1ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Create (3.7ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "inventory_id", "quantity", "unit_price", "total_price", "created_at", "updated_at") VALUES (1, 2, 5, 29.99, 149.95, '2025-06-29 14:07:45.156426', '2025-06-29 14:07:45.156426') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (5.7ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Create (3.3ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "inventory_id", "quantity", "unit_price", "total_price", "created_at", "updated_at") VALUES (1, 3, 1, 149.99, 149.99, '2025-06-29 14:07:45.180966', '2025-06-29 14:07:45.180966') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (5.6ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mOrder Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" WHERE "orders"."order_number" = 'WMS-20250629-54D3BB79' AND "orders"."id" != 1 LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mOrder Update (10.1ms)[0m  [1m[33mUPDATE "orders" SET "total_amount" = 2299.92, "updated_at" = '2025-06-29 14:07:45.217872' WHERE "orders"."id" = 1 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (5.8ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mOrder Exists? (2.5ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" WHERE "orders"."order_number" = 'WMS-20250629-55F8F5BA' LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mOrder Create (3.5ms)[0m  [1m[32mINSERT INTO "orders" ("order_number", "customer_name", "customer_email", "status", "total_amount", "order_date", "shipped_date", "created_at", "updated_at") VALUES ('WMS-20250629-55F8F5BA', 'Jane Smith', 'jane.smith@tech.com', 'processing', 1.0, '2025-06-29 14:07:45.241582', NULL, '2025-06-29 14:07:45.246154', '2025-06-29 14:07:45.246154') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (3.6ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Create (5.8ms)[0m  [1m[32mINSERT INTO "order_items" ("order_id", "inventory_id", "quantity", "unit_price", "total_price", "created_at", "updated_at") VALUES (2, 1, 1, 999.99, 999.99, '2025-06-29 14:07:45.260956', '2025-06-29 14:07:45.260956') RETURNING "id" /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (3.7ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN /*application='WmsApi'*/[0m
+  [1m[36mOrder Exists? (2.6ms)[0m  [1m[34mSELECT 1 AS one FROM "orders" WHERE "orders"."order_number" = 'WMS-20250629-55F8F5BA' AND "orders"."id" != 2 LIMIT 1 /*application='WmsApi'*/[0m
+  [1m[36mOrder Update (2.6ms)[0m  [1m[33mUPDATE "orders" SET "total_amount" = 999.99, "updated_at" = '2025-06-29 14:07:45.282494' WHERE "orders"."id" = 2 /*application='WmsApi'*/[0m
+  [1m[36mTRANSACTION (2.5ms)[0m  [1m[35mCOMMIT /*application='WmsApi'*/[0m
+  [1m[36mInventory Count (0.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "inventories" /*application='WmsApi'*/[0m
+  [1m[36mOrder Count (0.5ms)[0m  [1m[34mSELECT COUNT(*) FROM "orders" /*application='WmsApi'*/[0m
+  [1m[36mOrderItem Count (0.9ms)[0m  [1m[34mSELECT COUNT(*) FROM "order_items" /*application='WmsApi'*/[0m
+Started GET "/api/v1/inventories" for 127.0.0.1 at 2025-06-29 19:38:13 +0530
+Processing by Api::V1::InventoriesController#index as */*
+  [1m[36mInventory Load (6.3ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" /*action='index',application='WmsApi',controller='inventories'*/[0m
+  ↳ app/controllers/api/v1/inventories_controller.rb:6:in `index'
+Completed 200 OK in 16ms (Views: 6.8ms | ActiveRecord: 6.2ms (1 query, 0 cached) | GC: 0.7ms)
+
+
+Started GET "/api/v1/orders" for 127.0.0.1 at 2025-06-29 19:38:19 +0530
+Processing by Api::V1::OrdersController#index as */*
+  [1m[36mOrder Load (0.4ms)[0m  [1m[34mSELECT "orders".* FROM "orders" /*action='index',application='WmsApi',controller='orders'*/[0m
+  ↳ app/controllers/api/v1/orders_controller.rb:6:in `index'
+  [1m[36mOrderItem Load (0.3ms)[0m  [1m[34mSELECT "order_items".* FROM "order_items" WHERE "order_items"."order_id" IN (1, 2) /*action='index',application='WmsApi',controller='orders'*/[0m
+  ↳ app/controllers/api/v1/orders_controller.rb:6:in `index'
+  [1m[36mInventory Load (0.2ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" WHERE "inventories"."id" IN (1, 2, 3) /*action='index',application='WmsApi',controller='orders'*/[0m
+  ↳ app/controllers/api/v1/orders_controller.rb:6:in `index'
+Completed 200 OK in 25ms (Views: 19.8ms | ActiveRecord: 1.0ms (3 queries, 0 cached) | GC: 2.1ms)
+
+
+Started GET "/" for ::1 at 2025-06-29 19:41:17 +0530
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /root/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /root/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.0ms | GC: 0.0ms)
+Completed 200 OK in 3ms (Views: 2.0ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.3ms)
+
+
+Started GET "/api/v1/inventories" for ::1 at 2025-06-29 19:53:43 +0530
+Processing by Api::V1::InventoriesController#index as HTML
+  [1m[36mInventory Load (4.0ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" /*action='index',application='WmsApi',controller='inventories'*/[0m
+  ↳ app/controllers/api/v1/inventories_controller.rb:6:in `index'
+Completed 200 OK in 17ms (Views: 12.0ms | ActiveRecord: 3.9ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/favicon.ico" for ::1 at 2025-06-29 19:53:43 +0530
+  
+ActionController::RoutingError (No route matches [GET] "/favicon.ico"):
+  
+Started GET "/api/v1/inventories" for ::1 at 2025-06-30 00:26:44 +0530
+Processing by Api::V1::InventoriesController#index as HTML
+  [1m[36mInventory Load (26.5ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" /*action='index',application='WmsApi',controller='inventories'*/[0m
+  ↳ app/controllers/api/v1/inventories_controller.rb:6:in `index'
+Completed 200 OK in 139ms (Views: 89.2ms | ActiveRecord: 26.2ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/api/v1/inventories" for ::1 at 2025-06-30 00:26:46 +0530
+Processing by Api::V1::InventoriesController#index as HTML
+  [1m[36mInventory Load (0.6ms)[0m  [1m[34mSELECT "inventories".* FROM "inventories" /*action='index',application='WmsApi',controller='inventories'*/[0m
+  ↳ app/controllers/api/v1/inventories_controller.rb:6:in `index'
+Completed 200 OK in 10ms (Views: 9.0ms | ActiveRecord: 0.6ms (1 query, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/" for ::1 at 2025-06-30 00:27:01 +0530
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /root/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /root/.rbenv/versions/3.2.2/lib/ruby/gems/3.2.0/gems/railties-8.0.2/lib/rails/templates/rails/welcome/index.html.erb (Duration: 8.4ms | GC: 0.0ms)
+Completed 200 OK in 43ms (Views: 21.1ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+
+Started GET "/up" for ::1 at 2025-06-30 00:34:07 +0530
+Processing by Rails::HealthController#show as HTML
+  Rendering html template
+  Rendered html template (Duration: 0.5ms | GC: 0.0ms)
+Completed 200 OK in 59ms (Views: 52.3ms | ActiveRecord: 0.0ms (0 queries, 0 cached) | GC: 0.0ms)
+
+

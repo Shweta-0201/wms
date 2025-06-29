@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "d6529c44-76ac-4104-ae98-5933d9ddad52",
+		"name": "WMS System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46288170",
+		"_collection_link": "https://shwetashekhawat-5768434.postman.co/workspace/Shweta-Shekhawat's-Workspace~4dc76c69-8fb9-467f-86a7-cf27f6515d14/collection/46288170-d6529c44-76ac-4104-ae98-5933d9ddad52?action=share&source=collection_link&creator=46288170"
+	},
+	"item": [
+		{
+			"name": "get orders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"order\": {\n    \"customer_name\": \"Shweta Shekhawat\",\n    \"customer_email\": \"shweta02@gmail.com\",\n    \"status\": \"pending\",\n    \"total_amount\": 499.99,\n    \"order_date\": \"2025-06-29T10:30:00Z\",\n    \"shipped_date\": null\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update order",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"order\": {\n    \"customer_name\": \"Bob Williams\",\n    \"customer_email\": \"bob@example.com\",\n    \"status\": \"shipped\",\n    \"shipped_date\": \"2025-06-29T12:00:00Z\",\n    \"total_amount\": 4200.50\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/orders/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add inventory",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"inventory\": {\n    \"sku\": \"SKU1001\",\n    \"name\": \"Laptop Stand\",\n    \"description\": \"Ergonomic adjustable laptop stand\",\n    \"quantity\": 100,\n    \"price\": 1499.99,\n    \"location\": \"Warehouse A - Shelf B2\",\n    \"supplier\": \"TechGear Ltd.\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/inventories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"inventories"
+					]
+				},
+				"description": "add inventory\n"
+			},
+			"response": []
+		},
+		{
+			"name": "add orders",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"order\": {\n    \"customer_name\": \"Alice Johnson\",\n    \"customer_email\": \"alice@example.com\",\n    \"status\": \"pending\",\n    \"total_amount\": 3000.00,\n    \"order_date\": \"2025-06-29T10:00:00Z\",\n    \"order_items\": [\n      {\n        \"inventory_id\": 1,\n        \"quantity\": 2,\n        \"unit_price\": 500.00,\n        \"total_price\": 1000.00\n      },\n      {\n        \"inventory_id\": 2,\n        \"quantity\": 4,\n        \"unit_price\": 500.00,\n        \"total_price\": 2000.00\n      }\n    ]\n  }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get inventories",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"inventory\": {\n    \"sku\": \"SKU1001\",\n    \"name\": \"Laptop Stand\",\n    \"description\": \"Ergonomic adjustable laptop stand\",\n    \"quantity\": 100,\n    \"price\": 1499.99,\n    \"location\": \"Warehouse A - Shelf B2\",\n    \"supplier\": \"TechGear Ltd.\"\n  }\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/inventories",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"inventories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add order item",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"order\": {\n    \"customer_name\": \"John Doe\",\n    \"customer_email\": \"john@example.com\",\n    \"status\": \"pending\",\n    \"total_amount\": 2999.80,\n    \"shipped_date\": null\n  },\n  \"order_items\": [\n    {\n      \"inventory_id\": 2,\n      \"quantity\": 2,\n      \"unit_price\": 1499.9\n    }\n  ]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
